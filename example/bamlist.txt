@@ -1,0 +1,4 @@
+Anc1.bam	Anc1	ANE	30	20	5
+Anc2.bam	Anc2	AncNatAm	30	20	5
+Pd1.bam	Pd1	NatAm	30	20	0
+Pd2.bam	Pd2	NatAm	30	20	0
