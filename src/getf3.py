@@ -12,7 +12,7 @@ if sys.version_info[0] == 3:
 	xrange = range
 	pyver=3
 
-allowedpars=["h1", "h2", "target", "bsize", "freqpref", "resdir", "category"]
+allowedpars=["h1", "h2", "target", "bsize", "freqpref", "resdir", "category", "singlehapout"]
 
 USAGE="""
 Compute f3 statistics of the form f3(h1, h2; target), using definition and normalization in Patterson et al, 2012 (Genetics).
@@ -24,6 +24,7 @@ bsize\tInt. Length of the blocks (in bp) for block-jackknife procedure. This val
 freqpref\tString. Prefix from prefix_freqs.gz file created by BuildFreqs.py.
 resdir\tString. Name of directory where results will be placed. Default: res.
 category\tString. Used for automatic plotting. This will be appended to the result. Default: Other.
+singlehapout\t(0 | 1). Set to 1 when target is a single pseudo-haploid outgroup. This will disable het. normalisation from Patterson 2012 and set f3 denominator to 1. Default: 0. 
 Sample call: getf3.py h1=popnameh1 h2=popnameh2 target=popnametarget bsize=3500000 freqpref=prefix resdir=dirname category=somecategory
 Run without arguments to get this message. 
 """
@@ -36,6 +37,7 @@ if len(argvect)==0:
 
 arghash={}
 arghash["bsize"]=5000000
+arghash["singlehapout"]=0
 arghash["resdir"]="res"
 arghash["category"]="Other"
 for i in argvect:
@@ -67,11 +69,22 @@ bsize=arghash["bsize"]
 freqpref=arghash["freqpref"]
 resdir=arghash["resdir"]
 Cat=arghash["category"]
+singlehapout=arghash["singlehapout"]
 
 try:
 	bsize=int(bsize)
 except:
 	print("bsize should be an int\n")
+
+try:
+	singlehapout=int(singlehapout)
+except:
+	print("singlehapout should be 0 or 1\n")
+
+if singlehapout!=1 and singlehapout!=0:
+	print("singlehapout should be 0 or 1")
+	print(USAGE)
+	sys.exit(1)
 
 if os.path.exists(resdir) and os.path.isdir(resdir):
 	r=0
@@ -194,12 +207,22 @@ with subprocess.Popen(["zcat",freqpref+"_freqs.gz"],stdout=subprocess.PIPE).stdo
 		h2f=l[5+h2p*3]
 		h3f=l[5+h3p*3]
 		try:
-			#this is hhat=(min*maj)/(tot*(tot-1))
-			h3h=(float(l[5+h3p*3+1])*float(l[5+h3p*3+2]))/((float(l[5+h3p*3+1])+float(l[5+h3p*3+2]))*((float(l[5+h3p*3+1])+float(l[5+h3p*3+2]))-1))
-			#this is the extraterm=hhat/tot
-			h3e=h3h/(float(l[5+h3p*3+1])+float(l[5+h3p*3+2]))
-			top=((float(h3f)-float(h1f))*(float(h3f)-float(h2f)))-float(h3e)
-			bot=2*float(h3h)
+			if singlehapout == 0:
+				#this is hhat=(min*maj)/(tot*(tot-1))
+				h3h=(float(l[5+h3p*3+1])*float(l[5+h3p*3+2]))/((float(l[5+h3p*3+1])+float(l[5+h3p*3+2]))*((float(l[5+h3p*3+1])+float(l[5+h3p*3+2]))-1))
+				#this is the extraterm=hhat/tot
+				h3e=h3h/(float(l[5+h3p*3+1])+float(l[5+h3p*3+2]))
+				top=((float(h3f)-float(h1f))*(float(h3f)-float(h2f)))-float(h3e)
+				bot=2*float(h3h)
+			else:
+				tot=float(l[5+h3p*3+1])+float(l[5+h3p*3+2])
+				if tot != 1:
+					h3h=(float(l[5+h3p*3+1])*float(l[5+h3p*3+2]))/((float(l[5+h3p*3+1])+float(l[5+h3p*3+2]))*((float(l[5+h3p*3+1])+float(l[5+h3p*3+2]))-1))
+				else:   
+					h3h=(float(l[5+h3p*3+1])*float(l[5+h3p*3+2]))
+				h3e=h3h/(float(l[5+h3p*3+1])+float(l[5+h3p*3+2]))
+				top=((float(h3f)-float(h1f))*(float(h3f)-float(h2f)))-float(h3e)
+				bot=1
 		except:
 			#the try block could fail because float casts did not work (missing data). If so, we skip the site
 			continue

@@ -4,7 +4,7 @@
 args<-commandArgs(TRUE)
 
 #names of recognized arguments
-PossibleArgNames<-c("freqpref", "x", "y", "target", "catfile", "legfile", "nthr", "bsize", "rmtrns")
+PossibleArgNames<-c("freqpref", "x", "y", "target", "catfile", "legfile", "nthr", "bsize", "rmtrns", "singlehapout")
 
 USAGE<-("
 	Compute f3 statistics of the form f3(h1, h2; target), using definition and normalization in Patterson et al, 2012 (Genetics), for two samples and get pairwise comparisons. x and y will be fixed in h1 and h2 will be all other pops in the panel, target will also be fixed. 
@@ -18,6 +18,7 @@ USAGE<-("
 	nthr\tINT\tNumber of threads to use. Each test is sent to a different cpu. Use many cores! =9 Default: 1
 	bsize\tINT\tSize of each block used for weighted block jacknife (in nucleotides). Default: 5000000
 	rmtrns\t(0 | 1)\tInclude or remove transition SNPs. Default: 0
+	singlehapout\t(0 | 1)\tSet to 1 when target is a single pseudo-haploid outgroup. This will disable het. normalisation from Patterson 2012 and set f3 denominator to 1. Default: 0. 
 	Sample call: autoPWf3wfixed.R freqpref=prefix x=firstpopnameh1 y=secondpopnameh1 nthr=50 bsize=3500000 catfile=categories legfile=legendvalues rmtrns=1
 ")
 
@@ -36,6 +37,7 @@ for(i in PossibleArgNames){
 ArgHash[["bsize"]]<-5000000
 ArgHash[["nthr"]]<-1
 ArgHash[["rmtrns"]]<-0
+ArgHash[["singlehapout"]]<-0
 
 #remove spaces from argument names and vals
 argnames<-gsub(" ", "", unlist(lapply(strsplit(args, "="), "[[", 1)))
@@ -64,6 +66,7 @@ legfile<-ArgHash[["legfile"]]
 nthr<-as.integer(ArgHash[["nthr"]])
 bsize<-as.integer(ArgHash[["bsize"]])
 rmtrns<-as.integer(ArgHash[["rmtrns"]])
+singlehapout<-as.integer(ArgHash[["singlehapout"]])
 
 if(is.na(freqpref)){
 	message(USAGE)
@@ -73,6 +76,11 @@ if(is.na(freqpref)){
 if(!(rmtrns==1 | rmtrns==0)){
 	message(USAGE)
 	stop("rmtrns can only be 0 or 1")
+}
+
+if(!(singlehapout==1 | singlehapout==0)){
+	message(USAGE)
+	stop("singlehapout can only be 0 or 1")
 }
 
 
@@ -147,6 +155,10 @@ h1<-x
 	Dprog<-"getf3.py"
 	if(rmtrns==1){
 		Dprog<-"getf3NT.py"
+	}
+
+	if(singlehapout==1){
+		Dprog<-paste0(Dprog, " singlehapout=1")
 	}
 
 	freqprefbase<-strsplit(freqpref, "/")[[1]][length(strsplit(freqpref, "/")[[1]])]
@@ -357,6 +369,10 @@ h1<-y
 	Dprog<-"getf3.py"
 	if(rmtrns==1){
 		Dprog<-"getf3NT.py"
+	}
+
+	if(singlehapout==1){
+		Dprog<-paste0(Dprog, " singlehapout=1")
 	}
 
 	freqprefbase<-strsplit(freqpref, "/")[[1]][length(strsplit(freqpref, "/")[[1]])]

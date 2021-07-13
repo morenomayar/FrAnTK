@@ -11,7 +11,7 @@ if sys.version_info[0] == 3:
 	xrange = range
 	pyver=3
 
-allowedpars=["listname", "freqpref", "newpref", "nthr", "regionsfile"]
+allowedpars=["listname", "freqpref", "newpref", "nthr", "regionsfile", "keeptmps"]
 
 USAGE="""
 Add sequencing data in one or more bam files to a precomputed frequency file (output from BuildFreqs.py). For each bam file, one random allele is sampled at each site present in the frequency file.
@@ -34,6 +34,7 @@ Run without arguments to get this message.
 argvect=sys.argv[1:]
 arghash={}
 arghash["nthr"]=1
+arghash["keeptmps"]=0
 for i in argvect:
 	if "=" not in i:
 		print(i+" is not a valid arg sntx\n")
@@ -49,6 +50,11 @@ for i in argvect:
 		print(USAGE)
 		sys.exit(1)
 	arghash[argname]=i.split("=")[1].split()[0]
+
+try:
+	keeptmps=int(keeptmps)
+except:
+	print("keeptmps should be 0 or 1\n")
 
 try:
 	regionsfile=arghash["regionsfile"]
@@ -323,6 +329,23 @@ r=os.system(makenewregs)
 
 makenewchrs="cp "+freqpref+"_chrs "+newpref+"_chrs"
 r=os.system(makenewchrs)
+
+#cleanup
+if keeptmps==0:
+	for i in filenames.keys():
+		for j in filenames[i]:
+			rmcmd="rm "+j
+			r=os.system(rmcmd)
+	for i in freqfilenames:
+		rmcmd="rm "+i
+		r=os.system(rmcmd)
+	rmcmd="rm "+freqprefbase+"_"+newpref+"_"+RandExt+"_samplecmds"
+	r=os.system(rmcmd)
+
+	
+
+
+
 
 
 

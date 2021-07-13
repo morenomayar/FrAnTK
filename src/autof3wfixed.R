@@ -4,7 +4,7 @@
 args<-commandArgs(TRUE)
 
 #names of recognized arguments
-PossibleArgNames<-c("freqpref", "h1", "h2", "target", "catfile", "legfile", "nthr", "bsize", "resfile", "rmtrns")
+PossibleArgNames<-c("freqpref", "h1", "h2", "target", "catfile", "legfile", "nthr", "bsize", "resfile", "rmtrns", "singlehapout")
 
 USAGE<-("
 	Compute f3 statistics of the form f3(h1, h2; target), using definition and normalization in Patterson et al, 2012 (Genetics). Fix two of h1,h2,target and loop over the remaining one. 
@@ -20,6 +20,7 @@ USAGE<-("
 	bsize\tINT\tSize of each block used for weighted block jacknife (in nucleotides). Default: 5000000
 	resfile\tSTR\tThis program creates a txt output file. Edit that file and feed it here for replotting after editing txt output, catfile or legfile. This option overrides all others. 
 	rmtrns\t(0 | 1)\tInclude or remove transition SNPs. Default: 0
+	singlehapout\t(0 | 1)\tSet to 1 when target is a single pseudo-haploid outgroup. This will disable het. normalisation from Patterson 2012 and set f3 denominator to 1. Default: 0. 
 	Sample call: autof3wfixed.R freqpref=prefix h1=popnameh1 h2=popnameh2 nthr=50 bsize=3500000 catfile=categories legfile=legendvalues rmtrns=1
 ")
 
@@ -38,6 +39,7 @@ for(i in PossibleArgNames){
 ArgHash[["bsize"]]<-5000000
 ArgHash[["nthr"]]<-1
 ArgHash[["rmtrns"]]<-0
+ArgHash[["singlehapout"]]<-0
 
 #remove spaces from argument names and vals
 argnames<-gsub(" ", "", unlist(lapply(strsplit(args, "="), "[[", 1)))
@@ -73,6 +75,7 @@ nthr<-as.integer(ArgHash[["nthr"]])
 bsize<-as.integer(ArgHash[["bsize"]])
 resfile<-ArgHash[["resfile"]]
 rmtrns<-as.integer(ArgHash[["rmtrns"]])
+singlehapout<-as.integer(ArgHash[["singlehapout"]])
 
 if((is.na(freqpref) ) & is.na(ArgHash[["resfile"]])){
 	message(USAGE)
@@ -82,6 +85,11 @@ if((is.na(freqpref) ) & is.na(ArgHash[["resfile"]])){
 if(!(rmtrns==1 | rmtrns==0)){
 	message(USAGE)
 	stop("rmtrns can only be 0 or 1")
+}
+
+if(!(singlehapout==1 | singlehapout==0)){
+	message(USAGE)
+	stop("singlehapout can only be 0 or 1")
 }
 
 #only do this if resfile was not specified, otherwise just go below and do the plotting
@@ -147,6 +155,10 @@ if(is.na(resfile)){
 	Dprog<-"getf3.py"
 	if(rmtrns==1){
 		Dprog<-"getf3NT.py"
+	}
+
+	if(singlehapout==1){
+		Dprog<-paste0(Dprog, " singlehapout=1")
 	}
 
 	freqprefbase<-strsplit(freqpref, "/")[[1]][length(strsplit(freqpref, "/")[[1]])]
