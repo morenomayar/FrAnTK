@@ -157,7 +157,7 @@ file. The following columns are organised in per-population triplets. The first 
 
 These are scripts for running single tests (feel free to request new scripts)
 
-- `getf3.py` Compute f3-statistics of the form f3(h1, h2; target), using definition and normalization in [Patterson et al, 2012](https://www.genetics.org/content/192/3/1065).
+- `getf3.py` Compute f3-statistics of the form f3(h1, h2; target), using definition and normalization in [Patterson et al, 2012](https://www.genetics.org/content/192/3/1065). Normalization and het. correction can be disabled by using `singlehapout=1` (useful for 'outgroup f3-stats' where the target pop is represented by a **single pseudo-haploid individual**).
 - `getD.py` Compute D-statistics of the form D(h1, h2; h3, h4), using definition and normalization in [Patterson et al, 2012](https://www.genetics.org/content/192/3/1065).
 - `getF4.py` Compute f4-statistics of the form D(h1, h2; h3, h4), using definition and normalization in [Patterson et al, 2012](https://www.genetics.org/content/192/3/1065).
 - `getF4Ratio.py` Compute f4-ratio of the form f4(h1, h4; x, h3)/f4(h1, h4; h2, h3), using definition in [Patterson et al, 2012](https://www.genetics.org/content/192/3/1065) [f4(A, O; x, C)/f4(A, O; B, C)]. We assume x is admixed between pops related to h2 (B) and h3 (C); and h1 (A) forms a clade with h2. 
