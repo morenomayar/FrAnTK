@@ -350,6 +350,10 @@ column (Minimum base quality).
 
 **Important note 3**: Make sure that `freqpref` and `newpref` are different. 
 
+In some cases (particularly for study organisms other than human), a reference genotype dataset is not available. Instead, the user usually has
+a bunch of BAM/CRAM files with sequencing data from multiple individuals. When these data is suited for SNP discovery, we could use [ANGSD](http://www.popgen.dk/angsd/index.php/SNP_calling) to create a list of segregating sites. We can then turn the list into a `.bim` file, which we 
+can then use as an input for `BuildDummyFreqs.py`. This will create a set of FrAnTK frquency [files](#SecPrecomputingAlleleFrequencies) (`_freqs.gz`, `_pops`, `_regions`, `_chrs`), which can be used to produce pseudo-haploid calls using [`addBams.py`](SecAddingSequencingData) or [`bam2plink.py`](#SecAddingSequencingData2). 
+
 <a name="SecAddingSequencingData2"></a>
 # Adding sequencing data 2 (`bam2plink.py`)
 
