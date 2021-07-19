@@ -154,6 +154,11 @@ file. The following columns are organised in per-population triplets. The first 
 
 - `prefout_chrs` is a tab-separated list with the ordered names of the chromosomes in the dataset and their respective lengths (in bp). Similar to the first two columns of a [.fai file](http://www.htslib.org/doc/faidx.html). Columns 3 and 4 are first and last lines of each contig (useful for subsetting and sorting). 
 
+**Note:** In case the reference data were provided in a vcf file instead of a plink file, we can obtain a suitable plink file with bi-allelic SNPs using plink:
+```
+plink --vcf VCFFILENAME --double-id --snps-only --set-all-var-ids @:# --maf 0.000001 --make-bed --out PLINKFILENAME
+```
+
 <a name="SecComputingASingleStatistic"></a>
 # Computing a single statistic
 
