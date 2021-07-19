@@ -25,6 +25,8 @@
 
 [Adding sequencing data 2 (`bam2plink.py`)](#SecAddingSequencingData2)
 
+[Adding sequencing data without a genotype reference dataset (`BuildDummyFreqs.py`)](#SecAddingSequencingData3)
+
 [f4-ratios](#SecF4Ratios)
 
 [Admixture/contamination subtracted f4-statistics](#SecAdmixtureContaminationSubtractedF4Statistics)
@@ -350,10 +352,6 @@ column (Minimum base quality).
 
 **Important note 3**: Make sure that `freqpref` and `newpref` are different. 
 
-In some cases (particularly for study organisms other than human), a reference genotype dataset is not available. Instead, the user usually has
-a bunch of BAM/CRAM files with sequencing data from multiple individuals. When these data is suited for SNP discovery, we could use [ANGSD](http://www.popgen.dk/angsd/index.php/SNP_calling) to create a list of segregating sites. We can then turn the list into a `.bim` file, which we 
-can then use as an input for `BuildDummyFreqs.py`. This will create a set of FrAnTK frquency [files](#SecPrecomputingAlleleFrequencies) (`_freqs.gz`, `_pops`, `_regions`, `_chrs`), which can be used to produce pseudo-haploid calls using [`addBams.py`](SecAddingSequencingData) or [`bam2plink.py`](#SecAddingSequencingData2). 
-
 <a name="SecAddingSequencingData2"></a>
 # Adding sequencing data 2 (`bam2plink.py`)
 
@@ -378,7 +376,21 @@ bam2plink.py bamfile=Pd1.bam plinkpref=testfrq trim=2 MinMQ=30 MinBQ=20 indname=
 The arguments passed to `bam2plink.py` are the same arguments we use for `addBams.py`. Please keep in mind that the
 'Important notes' for `addBams.py` also apply to `bam2plink.py` ([see above for arguments and important notes](#SecAddingSequencingData)).
 
+<a name="SecAddingSequencingData3"></a>
+# Adding sequencing data without a genotype reference dataset (`BuildDummyFreqs.py`)
 
+In some cases (particularly for study organisms other than human), a reference genotype dataset is not available. Instead, the user usually has
+a bunch of BAM/CRAM files with sequencing data from multiple individuals. When these data is suited for SNP discovery, we could use [ANGSD](http://www.popgen.dk/angsd/index.php/SNP_calling) to create a list of segregating sites. We can then turn the list into a `.bim` file, which we 
+can then use as an input for `BuildDummyFreqs.py`. This will create a set of FrAnTK frquency [files](#SecPrecomputingAlleleFrequencies) (`_freqs.gz`, `_pops`, `_regions`, `_chrs`), which can be used to produce pseudo-haploid calls using [`addBams.py`](SecAddingSequencingData) or [`bam2plink.py`](#SecAddingSequencingData2). 
+
+```
+#Example assuming we have an ANGSD .mafs file named outfile.mafs.gz similar to the one shown in the ANGSD link above
+#1. Convert to plink bim file
+paste <(zcat outfile.mafs.gz | cut -f 1) <(zcat outfile.mafs.gz | cut -f 1,2 | perl -pe 's/\t/:/g; s/\n/\t0\n/g;') <(zcat outfile.mafs.gz | cut -f 2-4) | tail -n +2 > dummy.bim
+
+#2. Create dummy freqs file
+BuildDummyFreqs.py plinkpref=dummy prefout=dummyfrq
+```
 <a name="SecF4Ratios"></a>
 # f4-ratios 
 
