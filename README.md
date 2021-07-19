@@ -396,6 +396,11 @@ paste <(zcat outfile.mafs.gz | cut -f 1) <(zcat outfile.mafs.gz | cut -f 1,2 | p
 #2. Create dummy freqs file
 BuildDummyFreqs.py plinkpref=dummy prefout=dummyfrq
 ```
+
+**Disclaimer:** Please note that results derived from this strategy will depend strongly on the reliability of the SNP sites. SNPs 
+discovered in datasets with low-depth, small sample sizes or high error will be less accurate that a set of SNPs discovered in 
+high-quality reference datasets. 
+
 <a name="SecF4Ratios"></a>
 # f4-ratios 
 
