@@ -72,6 +72,7 @@ listname=arghash["listname"]
 freqpref=arghash["freqpref"]
 newpref=arghash["newpref"]
 nthr=arghash["nthr"]
+keeptmps=arghash["keeptmps"]
 
 if freqpref == newpref:
 	print("freqpfref and newpref should be different")
