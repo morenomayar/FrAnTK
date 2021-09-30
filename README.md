@@ -7,6 +7,8 @@
 
 [Getting started](#SecGettingStarted)
 
+[Master wrapper](#SecMasterWrapper)
+
 [Precomputing allele frequencies](#SecPrecomputingAlleleFrequencies)
 
 [Computing a single statistic](#SecComputingASingleStatistic)
@@ -119,6 +121,27 @@ you must type the following everytime you run the scripts (replacing with your o
 ```
 export PATH=/my/path/to/frantk/distr/bin:$PATH
 ```
+
+<a name="SecMasterWrapper"></a>
+# Master Wrapper
+As of October 2021, FrAnTK includes a master wrapper that provides a straightforward, centralised way to call and get help for the main tools. You can run
+```
+frantk
+```
+without arguments to get a general description. 
+
+Throughout the documentation, we show how to use each of the FrAnTK scripts separately. These remain exactly the same, but now all commands 
+can ALSO be accessed through the master wrapper. For example, to compute an [f3-statistic or a D-statistic with `getf3.py` and `getD.py`]((#SecComputingASingleStatistic)) we would run
+```
+getf3.py h1=popnameh1 h2=popnameh2 target=popnametarget freqpref=prefix
+getD.py h1=popnameh1 h2=popnameh2 h3=popnameh3 h4=popnameh4 freqpref=prefix
+```
+With the new wrapper, we can also run 
+```
+frantk getf3 h1=popnameh1 h2=popnameh2 target=popnametarget freqpref=prefix
+frantk getD h1=popnameh1 h2=popnameh2 h3=popnameh3 h4=popnameh4 freqpref=prefix
+```
+
 <a name="SecPrecomputingAlleleFrequencies"></a>
 # Precomputing allele frequencies 
 **IMPORTANT**: You can find some example datasets you can use to test the general functionality under the `example` dir. `example/test.*`
