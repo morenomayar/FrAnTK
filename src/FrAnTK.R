@@ -82,6 +82,12 @@ USAGE<-("FrAnTK master wrapper.
 
 	See github.com/morenomayar/FrAnTK#adding-sequencing-data-2-bam2plinkpy and github.com/morenomayar/FrAnTK#adding-sequencing-data-without-a-genotype-reference-dataset-builddummyfreqspy for additional seq. data manipulation options. 
 
+	----------------------
+	Data format conversion
+	----------------------
+
+	Freqs2Treemix\tConvert freqs file to treemix input. 
+
 	--------
 	Examples
 	--------
@@ -98,6 +104,8 @@ USAGE<-("FrAnTK master wrapper.
 
 if(length(args)==0){
 	message(USAGE)
+	opt <- options(show.error.messages = FALSE)
+	on.exit(options(opt))
 	stop()
 }
 
@@ -135,6 +143,7 @@ if(args[1]=="help"){
 	ShortCallHash[["autoDEnhwfixed"]]<-"autoDEnhwfixed.R"
 	ShortCallHash[["autoDstrat"]]<-"autoDstrat.R"
 	ShortCallHash[["addBams"]]<-"addBams.py"
+	ShortCallHash[["Freqs2Treemix"]]<-"Freqs2Treemix.py"
 
 	#get tool name
 	tool<-ShortCallHash[[args[1]]]
