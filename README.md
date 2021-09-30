@@ -131,12 +131,12 @@ frantk
 without arguments to get a general description. 
 
 Throughout the documentation, we show how to use each of the FrAnTK scripts separately. These remain exactly the same, but now all commands 
-can ALSO be accessed through the master wrapper. For example, to compute an [f3-statistic or a D-statistic with `getf3.py` and `getD.py`]((#SecComputingASingleStatistic)) we would run
+can ALSO be accessed through the master wrapper. For example, to compute an [f3-statistic or a D-statistic with `getf3.py` and `getD.py`]((#SecComputingASingleStatistic)) we would run: 
 ```
 getf3.py h1=popnameh1 h2=popnameh2 target=popnametarget freqpref=prefix
 getD.py h1=popnameh1 h2=popnameh2 h3=popnameh3 h4=popnameh4 freqpref=prefix
 ```
-With the new wrapper, we can also run 
+The equivalent commands with the new wrapper would look like this: 
 ```
 frantk getf3 h1=popnameh1 h2=popnameh2 target=popnametarget freqpref=prefix
 frantk getD h1=popnameh1 h2=popnameh2 h3=popnameh3 h4=popnameh4 freqpref=prefix
