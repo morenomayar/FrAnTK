@@ -60,6 +60,8 @@ do
 echo '#!'$Rpath | cat - $i > ../bin/$i
 done
 
+mv ../bin/FrAnTK.R ../bin/FrAnTK
+
 #check if R libraries are installed
 #doParallel
 $Rpath -e 'library(doParallel)' > /dev/null 2>/dev/null
