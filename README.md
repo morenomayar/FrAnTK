@@ -3,6 +3,8 @@
 # Table of contents
 [Introduction](#SecIntroduction)
 
+[Citation](#SecCitation)
+
 [Requirements](#SecRequirements)
 
 [Getting started](#SecGettingStarted)
@@ -52,8 +54,8 @@ Our scripts are user friendly and should allow users with limited programming ex
 their own datasets efficiently. =)
 
 # Citation
-
-INSERT CITATION HERE
+<a name="SecCitation"></a>
+https://academic.oup.com/g3journal/advance-article/doi/10.1093/g3journal/jkab357/6395361?login=true
 
 <a name="SecRequirements"></a>
 # Requirements
