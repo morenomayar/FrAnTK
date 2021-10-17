@@ -53,8 +53,8 @@ subsequent joint analyses of both data types.
 Our scripts are user friendly and should allow users with limited programming experience or limited familiarity with a UNIX system to explore 
 their own datasets efficiently. =)
 
-# Citation
 <a name="SecCitation"></a>
+# Citation
 https://academic.oup.com/g3journal/advance-article/doi/10.1093/g3journal/jkab357/6395361?login=true
 
 <a name="SecRequirements"></a>
