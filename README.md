@@ -55,7 +55,7 @@ their own datasets efficiently. =)
 
 <a name="SecCitation"></a>
 # Citation
-https://academic.oup.com/g3journal/advance-article/doi/10.1093/g3journal/jkab357/6395361?login=true
+https://academic.oup.com/g3journal/advance-article/doi/10.1093/g3journal/jkab357/6395361
 
 <a name="SecRequirements"></a>
 # Requirements
