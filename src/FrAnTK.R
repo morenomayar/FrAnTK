@@ -6,7 +6,7 @@ args<-commandArgs(TRUE)
 
 options(scipen=999)
 
-PossibleFirstArgNames<-c("help", "BuildFreqs", "getf3", "getD", "getF4", "getF4Ratio", "getF4subtr", "getPWdist", "getEnhD", "getDstrat", "getDstrat2", "getDtrip", "autof3wfixed", "autoPWf3wfixed", "PlotPairwiseOutF3", "autoDwfixed", "autof4subtr", "autoPWdistwfixed", "autoDEnhwfixed", "autoDstrat", "addBams", "Freqs2Treemix")
+PossibleFirstArgNames<-c("help", "BuildFreqs", "getf3", "getf3NT", "getD", "getDNT", "getF4", "getF4NT", "getF4Ratio", "getF4RatioNT", "getF4subtr", "getF4subtrNT", "getPWdist", "getPWdistNT", "getEnhD", "getEnhDNT", "getDstrat", "getDstratNT", "getDstrat2", "getDstrat2NT", "getDtrip", "getDtripNT", "autof3wfixed", "autoPWf3wfixed", "PlotPairwiseOutF3", "autoDwfixed", "autof4subtr", "autoPWdistwfixed", "autoDEnhwfixed", "autoDstrat", "addBams", "Freqs2Treemix")
 
 USAGE<-("FrAnTK master wrapper. 
 
