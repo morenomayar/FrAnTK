@@ -34,25 +34,25 @@ USAGE<-("FrAnTK master wrapper.
 	Computing single statistics 
 	----------------------------
 
-	getf3\tCompute f3-statistics of the form f3(h1, h2; target).  (Call getf3.py) Wrapper: autof3wfixed and autoPWf3wfixed. 
+	getf3\tCompute f3-statistics of the form f3(h1, h2; target).  (Call getf3.py) Run getf3NT to exclude transitions. Wrapper: autof3wfixed and autoPWf3wfixed. 
 
-	getD\tCompute D-statistics of the form D(h1, h2; h3, h4).  (Call getD.py) Wrapper: autoDwfixed. 
+	getD\tCompute D-statistics of the form D(h1, h2; h3, h4).  (Call getD.py) Run getDNT to exclude transitions. Wrapper: autoDwfixed. 
 
-	getF4\tCompute f4-statistics of the form f4(h1, h2; h3, h4).  (Call getF4.py) Wrapper: autoDwfixed. 
+	getF4\tCompute f4-statistics of the form f4(h1, h2; h3, h4).  (Call getF4.py) Run getF4NT to exclude transitions. Wrapper: autoDwfixed. 
 
-	getF4Ratio\tCompute f4-ratio of the form f4(h1, h4; x, h3)/f4(h1, h4; h2, h3), using definition in Patterson et al, 2012 [f4(A, O; x, C)/f4(A, O; B, C)]. We assume x is admixed between pops related to h2 (B) and h3 (C); and h1 (A) forms a clade with h2.  (Call getF4Ratio.py) 
+	getF4Ratio\tCompute f4-ratio of the form f4(h1, h4; x, h3)/f4(h1, h4; h2, h3), using definition in Patterson et al, 2012 [f4(A, O; x, C)/f4(A, O; B, C)]. We assume x is admixed between pops related to h2 (B) and h3 (C); and h1 (A) forms a clade with h2.  (Call getF4Ratio.py) Run getF4RatioNT to exclude transitions. 
 
-	getF4subtr\tCompute admixture subtracted F4 statistics of the form (f4(h1, h2; h3, h4)-padm*f4(h1, x; h3, h4))/(1-padm), using definition in Reich et al. 2012.  (Call getF4subtr.py) Wrapper: autof4subtr. 
+	getF4subtr\tCompute admixture subtracted F4 statistics of the form (f4(h1, h2; h3, h4)-padm*f4(h1, x; h3, h4))/(1-padm), using definition in Reich et al. 2012.  (Call getF4subtr.py) Run getF4subtrNT to exclude transitions. Wrapper: autof4subtr. 
 
-	getPWdist\tCompute pairwise distance between 2 pops, defined as the average of p_h1*q_h2+q_h1*p_h2 over all sites.  (Call getPWdist.py) Wrapper: autoPWdistwfixed.  
+	getPWdist\tCompute pairwise distance between 2 pops, defined as the average of p_h1*q_h2+q_h1*p_h2 over all sites.  (Call getPWdist.py) Run getPWdistNT to exclude transitions. Wrapper: autoPWdistwfixed.  
 
-	getEnhD\tCompute enhanced D-statistics of the form D(h1, h2; h3, h4) (Meyer et al, 2012). We restrict to sites where h4 is invariant for one allele. Works better with many sites and not too many individuals/populations with very different ancestries in h4.  (Call getEnhD.py) Wrapper: autoDEnhwfixed. 
+	getEnhD\tCompute enhanced D-statistics of the form D(h1, h2; h3, h4) (Meyer et al, 2012). We restrict to sites where h4 is invariant for one allele. Works better with many sites and not too many individuals/populations with very different ancestries in h4.  (Call getEnhD.py) Run getEnhDNT to exclude transitions. Wrapper: autoDEnhwfixed. 
 
-	getDstrat\tCompute D-statistics of the form D(h1, h2; h3, h4), on sites where there are (minder, maxder] derived alleles in h1+h2+h3+h4. Similar to what is done in Prüfer et al, 2013, but we pick segregating sites in h1+h2+h3+h4.  (Call getDstrat.py) Wrapper: autoDstrat. 
+	getDstrat\tCompute D-statistics of the form D(h1, h2; h3, h4), on sites where there are (minder, maxder] derived alleles in h1+h2+h3+h4. Similar to what is done in Prüfer et al, 2013, but we pick segregating sites in h1+h2+h3+h4.  (Call getDstrat.py) Run getDstratNT to exclude transitions. Wrapper: autoDstrat. 
 
-	getDstrat2\tCompute D-statistics of the form D(h1, h2; h3, h4), on sites where there are (minder, maxder] derived alleles in the complete panel (freqpref). Similar to what is done in Prüfer et al, 2013, but we pick segregating sites in the complete panel.  (Call getDstrat2.py) Wrapper: autoDstrat. 
+	getDstrat2\tCompute D-statistics of the form D(h1, h2; h3, h4), on sites where there are (minder, maxder] derived alleles in the complete panel (freqpref). Similar to what is done in Prüfer et al, 2013, but we pick segregating sites in the complete panel.  (Call getDstrat2.py) Run getDstrat2NT to exclude transitions. Wrapper: autoDstrat. 
 	
-	getDtrip\tCompute the three possible arrangements of D(h1, h2; h3, h4).  (Call getDtrip.py) 
+	getDtrip\tCompute the three possible arrangements of D(h1, h2; h3, h4).  (Call getDtrip.py) Run getDtripNT to exclude transitions. 
 
 	-------------------
 	Automated wrappers 
@@ -125,15 +125,25 @@ if(args[1]=="help"){
 	ShortCallHash<-new.env()
 	ShortCallHash[["BuildFreqs"]]<-"BuildFreqs.py"
 	ShortCallHash[["getf3"]]<-"getf3.py"
+	ShortCallHash[["getf3NT"]]<-"getf3NT.py"
 	ShortCallHash[["getD"]]<-"getD.py"
+	ShortCallHash[["getDNT"]]<-"getDNT.py"
 	ShortCallHash[["getF4"]]<-"getF4.py"
+	ShortCallHash[["getF4NT"]]<-"getF4NT.py"
 	ShortCallHash[["getF4Ratio"]]<-"getF4Ratio.py"
+	ShortCallHash[["getF4RatioNT"]]<-"getF4RatioNT.py"
 	ShortCallHash[["getF4subtr"]]<-"getF4subtr.py"
-	ShortCallHash[["getPWdist"]]<-"autoPWdistwfixed"
+	ShortCallHash[["getF4subtrNT"]]<-"getF4subtrNT.py"
+	ShortCallHash[["getPWdist"]]<-"autoPWdistwfixed.py"
+	ShortCallHash[["getPWdistNT"]]<-"autoPWdistwfixedNT.py"
 	ShortCallHash[["getEnhD"]]<-"getEnhD.py"
+	ShortCallHash[["getEnhDNT"]]<-"getEnhDNT.py"
 	ShortCallHash[["getDstrat"]]<-"getDstrat.py"
+	ShortCallHash[["getDstratNT"]]<-"getDstratNT.py"
 	ShortCallHash[["getDstrat2"]]<-"getDstrat2.py"
+	ShortCallHash[["getDstrat2NT"]]<-"getDstrat2NT.py"
 	ShortCallHash[["getDtrip"]]<-"getDtrip.py"
+	ShortCallHash[["getDtripNT"]]<-"getDtripNT.py"
 	ShortCallHash[["autof3wfixed"]]<-"autof3wfixed.R"
 	ShortCallHash[["autoPWf3wfixed"]]<-"autof3wfixed.R"
 	ShortCallHash[["PlotPairwiseOutF3"]]<-"PlotPairwiseOutF3"
