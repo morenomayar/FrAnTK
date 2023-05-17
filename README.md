@@ -65,7 +65,7 @@ https://academic.oup.com/g3journal/advance-article/doi/10.1093/g3journal/jkab357
 
 - R and Rscript (>=3) https://cran.r-project.org
 
-- plink (>=1.9) https://www.cog-genomics.org/plink/
+- plink (1.9xxx) https://www.cog-genomics.org/plink/
 
 - samtools (>=1) http://www.htslib.org
 
